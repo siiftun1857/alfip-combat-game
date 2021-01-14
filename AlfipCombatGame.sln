@@ -1,0 +1,41 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30711.63
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlfipCoreLibs", "CoreLibs\AlfipCoreLibs.csproj", "{A5F83BE6-ACB9-4E48-969C-195ADF6F4444}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlfipCombatGameTest", "GameTest\AlfipCombatGameTest.csproj", "{F7D72E7C-E6B0-40E0-B4DD-462A29761F00}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{558678E2-0A72-466A-BA74-B24FBAF280C0}"
+	ProjectSection(SolutionItems) = preProject
+		.gitattributes = .gitattributes
+		.gitignore = .gitignore
+		desktop.ini = desktop.ini
+		LICENSE = LICENSE
+		preview.ico = preview.ico
+		README.md = README.md
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A5F83BE6-ACB9-4E48-969C-195ADF6F4444}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A5F83BE6-ACB9-4E48-969C-195ADF6F4444}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A5F83BE6-ACB9-4E48-969C-195ADF6F4444}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A5F83BE6-ACB9-4E48-969C-195ADF6F4444}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F7D72E7C-E6B0-40E0-B4DD-462A29761F00}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F7D72E7C-E6B0-40E0-B4DD-462A29761F00}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F7D72E7C-E6B0-40E0-B4DD-462A29761F00}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F7D72E7C-E6B0-40E0-B4DD-462A29761F00}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B099BE72-E321-4917-B5C8-16457DDC279D}
+	EndGlobalSection
+EndGlobal

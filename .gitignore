@@ -1,0 +1,9 @@
+*~
+*.vim
+
+obj/
+.vs/
+.ssh/
+.gnupg/
+
+AlfipGameTest.exe.config
