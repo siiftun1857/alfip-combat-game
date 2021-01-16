@@ -41,9 +41,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AlfipCore.cs" />
+    <Compile Include="ACPreset.cs" />
+    <Compile Include="AlfipCoreFuns.cs" />
+    <Compile Include="AlfipCoreFind.cs" />
+    <Compile Include="CombatManager.cs" />
+    <Compile Include="Comp.cs" />
     <Compile Include="Defs.cs" />
     <Compile Include="Dice.cs" />
+    <Compile Include="ICompProperties.cs" />
     <Compile Include="LoadoutSet.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StatSet.cs" />

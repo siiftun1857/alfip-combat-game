@@ -22,12 +22,15 @@ namespace AlfipCombatGame
         public Type thingClass = typeof(Thing);
     }
 
-    public class ThingDef : ConstructableDef
+    public class ThingDef : ConstructableDef, ICompProperties
     {
         public bool useHitpoint = false;
         public int maxHitpoint = 0;
         public virtual void Destroy() { }
         public List<Comp> comps;
+        public List<CompProperties> compProperties;
+
+        public List<CompProperties> CompProperties => compProperties;
     }
 
     public class EquipmentDef : ThingDef
@@ -47,10 +50,13 @@ namespace AlfipCombatGame
     }
 
 
-    public class CharacterDef : ThingDef
+    public class CharacterDef : Def, ICompProperties
     {
         public string characterName = "未命名";
         public LoadoutSet defaultLoadout;
         public CharacterStatSet defaultStat;
+
+        public List<CompProperties> compProperties;
+        public List<CompProperties> CompProperties => compProperties;
     }
 }

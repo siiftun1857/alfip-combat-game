@@ -10,25 +10,34 @@ namespace AlfipCombatGame
         public abstract class StatWithPoints
         {
             public int points = 0;
-            public virtual int rawValue => points;
+            public virtual int RawValue => points;
+
+            public static implicit operator int(StatWithPoints v) => v.points;
+            protected static T Tope<T>(int v) where T : StatWithPoints, new() => new T() { points = v };
         }
         public class HP : StatWithPoints // 生命值: 被摧毁之前可以承受的伤害总量
         {
-            public override int rawValue => 120 + points * 6;
+            public static implicit operator HP(int v) => Tope<HP>(v);
+            public override int RawValue => 120 + points * 6;
+
         }
         public class INV : StatWithPoints // 伤害免疫量: 在伤害不超过该值时，阻止防具受到伤害
         {
-            public override int rawValue => 3 * points;
+            public static implicit operator INV(int v) => Tope<INV>(v);
+            public override int RawValue => 3 * points;
+
         }
         public class ABS : StatWithPoints // 伤害吸收量: 在伤害不超过防具生命值上限一定比例时，阻止角色受到伤害
         {
-            public override int rawValue => 10 * points;
+            public static implicit operator ABS(int v) => Tope<ABS>(v);
+            public override int RawValue => 10 * points;
+
         }
 
         public abstract class StatRollable : StatWithPoints
         {
             public bool critLess = false;
-            public abstract int critValue
+            public abstract int CritValue
             {
                 get;
             }
@@ -40,30 +49,40 @@ namespace AlfipCombatGame
                     throw new ArgumentOutOfRangeException("value", "参数超出了骰子的可接受范围");
                 }
                 if (!critLess && rollValue == 6)
-                    return critValue;
-                return rawValue + rollValue;
+                    return CritValue;
+                return RawValue + rollValue;
 
             }
         }
         public class ATK : StatRollable // 攻击: 造成的基础伤害
         {
-            public override int critValue => (int)Math.Floor(3.75 * rawValue - 4.5);
+            public static implicit operator ATK(int v) => Tope<ATK>(v);
+            public override int CritValue => (int)Math.Floor(3.75 * RawValue - 4.5);
+
         }
         public class DEF : StatRollable // 防御: 阻止伤害的能力
         {
-            public override int critValue => (int)Math.Floor(6.3 * rawValue);
+            public static implicit operator DEF(int v) => Tope<DEF>(v);
+            public override int CritValue => (int)Math.Floor(6.3 * RawValue);
+
         }
         public class MOV : StatRollable // 移速: 移动距离
         {
-            public override int critValue => 6 * rawValue;
+            public static implicit operator MOV(int v) => Tope<MOV>(v);
+            public override int CritValue => 6 * RawValue;
+
         }
         public class SPD : StatRollable // 攻速: 先手成功率
         {
-            public override int critValue => (int)Math.Floor(4.5 * rawValue);
+            public static implicit operator SPD(int v) => Tope<SPD>(v);
+            public override int CritValue => (int)Math.Floor(4.5 * RawValue);
+
         }
         public class ACCU : StatRollable // 精准: 远程武器失准距离
         {
-            public override int critValue => (int)Math.Floor(9 * rawValue - 37.5);
+            public static implicit operator ACCU(int v) => Tope<ACCU>(v);
+            public override int CritValue => (int)Math.Floor(9 * RawValue - 37.5);
+
         }
 
 
@@ -87,11 +106,11 @@ namespace AlfipCombatGame
 
         public override int RedeemablePoints => 30;
         public override int TotalPoints =>
-            HP.points + ATK.points + DEF.points + MOV.points + SPD.points;
+            HP + ATK + DEF + MOV + SPD;
 
         public CharacterStatSet(CharacterStatSet target)
         {
-            ApplyStat(target.HP.points, target.ATK.points, target.DEF.points, target.MOV.points, target.SPD.points);
+            ApplyStat(target.HP, target.ATK, target.DEF, target.MOV, target.SPD);
         }
         public CharacterStatSet(int HP, int ATK, int DEF, int MOV, int SPD)
         {
@@ -99,18 +118,18 @@ namespace AlfipCombatGame
         }
         private void ApplyStat(int HP, int ATK, int DEF, int MOV, int SPD)
         {
-            this.HP.points = HP;
-            this.ATK.points = ATK;
-            this.DEF.points = DEF;
-            this.MOV.points = MOV;
-            this.SPD.points = SPD;
+            this.HP = HP;
+            this.ATK = ATK;
+            this.DEF = DEF;
+            this.MOV = MOV;
+            this.SPD = SPD;
         }
     }
     public class WeaponStatSet : StatSet
     {
         public override int RedeemablePoints => 20;
         public override int TotalPoints =>
-            HP.points + ATK.points + DEF.points;
+            HP + ATK + DEF;
 
         public Stats.HP HP = new Stats.HP();
         public Stats.ATK ATK = new Stats.ATK();
@@ -119,7 +138,7 @@ namespace AlfipCombatGame
 
         public WeaponStatSet(WeaponStatSet target)
         {
-            ApplyStat(target.HP.points, target.ATK.points, target.DEF.points, target.dualWield);
+            ApplyStat(target.HP, target.ATK, target.DEF, target.dualWield);
         }
         public WeaponStatSet(int HP, int ATK, int DEF, bool dualWield)
         {
@@ -127,9 +146,9 @@ namespace AlfipCombatGame
         }
         private void ApplyStat(int HP, int ATK, int DEF, bool dualWield)
         {
-            this.HP.points = HP;
-            this.ATK.points = ATK;
-            this.DEF.points = DEF;
+            this.HP = HP;
+            this.ATK = ATK;
+            this.DEF = DEF;
             this.dualWield = dualWield;
         }
     }
@@ -137,24 +156,24 @@ namespace AlfipCombatGame
     {
         public override int RedeemablePoints => 36;
         public override int TotalPoints =>
-            HP.points + ATK.points + DEF.points + ACCU.points;
+            HP + ATK + DEF + ACCU;
 
         public Stats.ACCU ACCU = new Stats.ACCU();
 
-        public RangedWeaponStatSet(RangedWeaponStatSet target): base(target)
+        public RangedWeaponStatSet(RangedWeaponStatSet target) : base(target)
         {
-            ACCU.points = target.ACCU.points;
+            ACCU = target.ACCU;
         }
         public RangedWeaponStatSet(int HP, int ATK, int DEF, int ACCU, bool dualWield) : base(HP, ATK, DEF, dualWield)
         {
-            this.ACCU.points = ACCU;
+            this.ACCU = ACCU;
         }
     }
     public class ArmorStatSet : StatSet
     {
         public override int RedeemablePoints => 20;
         public override int TotalPoints =>
-            HP.points + DEF.points + ABS.points + INV.points;
+            HP + DEF + ABS + INV;
 
         public Stats.HP HP = new Stats.HP();
         public Stats.DEF DEF = new Stats.DEF();
@@ -163,7 +182,7 @@ namespace AlfipCombatGame
 
         public ArmorStatSet(ArmorStatSet target)
         {
-            ApplyStat(target.HP.points, target.DEF.points, target.ABS.points, target.INV.points);
+            ApplyStat(target.HP, target.DEF, target.ABS, target.INV);
         }
         public ArmorStatSet(int HP, int DEF, int ABS, int INV)
         {
@@ -171,10 +190,10 @@ namespace AlfipCombatGame
         }
         private void ApplyStat(int HP, int DEF, int ABS, int INV)
         {
-            this.HP.points = HP;
-            this.DEF.points = DEF;
-            this.ABS.points = ABS;
-            this.INV.points = INV;
+            this.HP = HP;
+            this.DEF = DEF;
+            this.ABS = ABS;
+            this.INV = INV;
         }
     }
 }

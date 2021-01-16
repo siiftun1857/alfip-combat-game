@@ -13,5 +13,11 @@ namespace AlfipCombatGame
         public uint id;
         public ThingDef def;
         public int hitPoint;
+        public StatSet stats;
+    }
+    public class Character : Thing
+    {
+        public CharacterDef character;
+        //public StatusEffectTracer effectTracer;
     }
 }

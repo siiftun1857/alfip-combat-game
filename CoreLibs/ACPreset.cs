@@ -12,22 +12,23 @@ namespace AlfipCombatGame
     {
         static ACPreset()
         {
-            DefDatabase.Add( new CharacterDef() 
-                { 
-                    defName = "Character_Alfip",
-                    label = "Alfip",
-                    characterName = "亚尔菲普",
-                    defaultStat = new CharacterStatSet(
+            DefDatabase.Add(new CharacterDef()
+            {
+                defName = "Character_Alfip",
+                label = "Alfip",
+                characterName = "亚尔菲普",
+                defaultStat = new CharacterStatSet(
                         ATK: 15,
-                        HP:5,
-                        DEF:2,
-                        MOV:3,
-                        SPD:5
+                        HP: 5,
+                        DEF: 2,
+                        MOV: 3,
+                        SPD: 5
                         ),
-                    defaultLoadout = new LoadoutSet() { 
-                    
-                    },
-                });;
+                defaultLoadout = new LoadoutSet()
+                {
+
+                },
+            }); ;
         }
     }
 }
